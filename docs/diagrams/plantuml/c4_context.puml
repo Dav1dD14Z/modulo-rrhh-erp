@@ -1,0 +1,16 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(hr_user, "Usuario de RRHH", "Gestiona los perfiles de los empleados.")
+System(erp_system, "InnovateTech ERP", "Sistema de Planificación de Recursos Empresariales existente.")
+System_Ext(email_service, "Servicio de Email", "Sistema externo para enviar notificaciones.")
+
+System_Boundary(c1, "Módulo de RRHH") {
+    System(hr_module, "Módulo de RRHH", "Permite la gestión de empleados y ausencias.")
+}
+
+Rel(hr_user, hr_module, "Usa")
+Rel(hr_module, erp_system, "Obtiene datos de la estructura organizacional", "API REST/JSON")
+Rel(hr_module, email_service, "Envía notificaciones de bienvenida", "SMTP")
+
+@enduml

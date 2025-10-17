@@ -1,0 +1,16 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+System_Boundary(cloud, "Servidor Cloud (AWS/Azure)") {
+    ContainerDb(db, "PostgreSQL Server", "PostgreSQL", "Almacena datos de RRHH")
+    Container(api, "Spring Boot App", "Java / Spring Boot", "API REST para RRHH")
+    Container(web, "Nginx Server", "SPA / React", "Interfaz de usuario web")
+}
+
+Person_Ext(browser, "Navegador Web", "Usuario final")
+
+Rel(browser, web, "HTTPS")
+Rel(web, api, "Llama a la API REST", "HTTPS")
+Rel(api, db, "Conecta con base de datos", "JDBC")
+
+@enduml

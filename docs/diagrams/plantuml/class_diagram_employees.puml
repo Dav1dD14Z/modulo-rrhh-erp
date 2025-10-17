@@ -1,0 +1,42 @@
+@startuml ClassDiagram_Employees
+skinparam classAttributeIconSize 0
+
+class Employee {
+  - employeeId: string
+  - firstName: string
+  - lastName: string
+  - email: string
+  - position: string
+  - salary: float
+  + createProfile()
+  + updateProfile()
+  + viewProfile()
+}
+
+class Department {
+  - departmentId: string
+  - name: string
+}
+
+class EmployeeController {
+  + createEmployee(data): Employee
+  + getEmployeeById(id): Employee
+  + getAllEmployees(): List<Employee>
+}
+
+class EmployeeService {
+  + createEmployee(data): Employee
+  + getEmployeeById(id): Employee
+}
+
+class EmployeeRepository {
+  + save(employee): Employee
+  + findById(id): Employee
+}
+
+Employee "1" -- "1" Department
+EmployeeController ..> EmployeeService
+EmployeeService ..> EmployeeRepository
+EmployeeRepository ..> Employee
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml Sequence_LeaveRequest
+actor Employee
+participant SPA
+participant "API Gateway" as API
+participant LeaveService
+participant NotificationService
+
+Employee -> SPA: Rellena y envía formulario de solicitud
+activate SPA
+SPA -> API: POST /api/leaves/request
+activate API
+API -> LeaveService: createLeaveRequest(data)
+activate LeaveService
+LeaveService -> LeaveService: validaReglasDeNegocio()
+LeaveService -> NotificationService: notifyManager(request)
+activate NotificationService
+NotificationService --> LeaveService: ok
+deactivate NotificationService
+LeaveService --> API: solicitudCreada
+deactivate LeaveService
+API --> SPA: 201 Created
+deactivate API
+SPA --> Employee: Muestra mensaje de confirmación
+deactivate SPA
+@enduml

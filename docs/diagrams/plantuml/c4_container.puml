@@ -1,0 +1,18 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(hr_user, "Usuario de RRHH", "Gestiona los perfiles de los empleados.")
+System_Ext(erp_system, "InnovateTech ERP")
+
+System_Boundary(c1, "Módulo de RRHH") {
+    Container(spa, "Aplicación de Página Única (SPA)", "React/Angular", "El frontend web que corre en el navegador del usuario.")
+    Container(api, "API Gateway / Backend", "Java/Spring Boot", "Gestiona la lógica de negocio y expone la API REST.")
+    ContainerDb(db, "Base de Datos", "PostgreSQL", "Almacena la información de empleados, solicitudes, etc.")
+}
+
+Rel(hr_user, spa, "Usa", "HTTPS")
+Rel(spa, api, "Realiza llamadas a la API", "JSON/HTTPS")
+Rel_R(api, db, "Lee/Escribe en", "JDBC")
+Rel(api, erp_system, "Obtiene datos", "API REST/JSON")
+
+@enduml
